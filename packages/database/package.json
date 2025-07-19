@@ -1,0 +1,25 @@
+{
+  "name": "@backend/database",
+  "version": "1.0.0",
+  "main": "dist/client.js",
+  "types": "dist/client.d.ts",
+  "scripts": {
+    "build": "pnpm db:generate && tsc",
+    "dev": "pnpm db:generate && tsc --watch",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.1.1",
+    "ioredis": "^5.3.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.1.1",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  }
+}
