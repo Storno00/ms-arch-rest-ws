@@ -16,4 +16,4 @@ export const redis = new Redis({
   maxRetriesPerRequest: null,
 });
 
-export * from '@prisma/client';
+// export * from '@prisma/client';

@@ -1,7 +1,7 @@
 {
   "name": "@backend/database",
   "version": "1.0.0",
-  "main": "dist/client.js",
+  "main": "src/client.js",
   "types": "dist/client.d.ts",
   "scripts": {
     "build": "pnpm db:generate && tsc",

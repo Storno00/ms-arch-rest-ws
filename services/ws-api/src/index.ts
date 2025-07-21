@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
-import { createServer } from './server';
+import { bootstrap } from './server';
 
 dotenv.config();
 
 const PORT = process.env.PORT || 8081;
 
-const server = createServer();
+const server = bootstrap();
 
 server.listen(PORT, () => {
   console.log(`🚀 WebSocket API server running on port ${PORT}`);
