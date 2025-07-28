@@ -1,29 +1,47 @@
-FROM node:18-alpine
-
+# --- 1. Réteg: "dependencies" ---
+FROM node:18-alpine AS dependencies
 WORKDIR /app
-
-# Install pnpm
+# pnpm aktiválása ebben a rétegben
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Copy workspace files
 COPY package.json pnpm-workspace.yaml pnpm-lock.yaml ./
-COPY packages/shared/ ./packages/shared/
-COPY packages/database/ ./packages/database/
-COPY services/ws-api/ ./services/ws-api/
+COPY tsconfig.base.json ./
+# Összes package.json bemásolása
+COPY packages/database/package.json ./packages/database/
+COPY packages/shared/package.json ./packages/shared/
+COPY services/rest-api/package.json ./services/rest-api/
+COPY services/ws-api/package.json ./services/ws-api/
+# Prisma séma bemásolása
+COPY packages/database/prisma ./packages/database/prisma/
 
-# Install dependencies
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --prod=false
 
-# Build shared packages
-RUN pnpm --filter shared build
-RUN pnpm --filter database build
+# --- 2. Réteg: "builder" ---
+FROM node:18-alpine AS builder
+WORKDIR /app
+# ITT A JAVÍTÁS: pnpm aktiválása ebben a rétegben is!
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Generate Prisma client
-RUN pnpm --filter database db:generate
+# Fájlok másolása az előző rétegből
+COPY --from=dependencies /app ./
+COPY . .
 
-# Build ws-api
-RUN pnpm --filter ws-api build
+# Build futtatása, aminek már látnia kell a pnpm-et
+RUN pnpm --filter "ws-api^..." build
+
+# A production-ready mappa létrehozása
+RUN pnpm --filter ws-api deploy --prod --legacy /prod/ws-api
+
+# --- 3. Réteg: "final" ---
+# Ez a réteg tiszta marad, nincs szüksége pnpm-re
+FROM node:18-alpine AS final
+WORKDIR /app
+ENV NODE_ENV=production
+
+# Telepítjük az OpenSSL-t, amire a Prisma-nak szüksége van.
+RUN apk add --no-cache openssl
+
+COPY --from=builder /prod/ws-api .
 
 EXPOSE 8081
-
-CMD ["pnpm", "--filter", "ws-api", "start"]
+CMD ["node", "dist/index.js"]

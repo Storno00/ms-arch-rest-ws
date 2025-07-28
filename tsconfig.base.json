@@ -1,0 +1,25 @@
+
+{
+  "compilerOptions": {
+    "composite": true,
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022"],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "sourceMap": true, 
+    "declaration": true,
+    "declarationMap": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@backend/database": ["packages/database/src"],
+      "@backend/database/*": ["packages/database/src/*"],
+      "@backend/shared": ["packages/shared/src"],
+      "@backend/shared/*": ["packages/shared/src/*"]
+    }
+  }
+}

@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_DB: backend_db
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: kacsa
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -26,7 +26,7 @@ services:
       - "8080:8080"
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://user:password@postgres:5432/backend_db?schema=public
+      DATABASE_URL: postgresql://user:kacsa@postgres:5432/backend_db?schema=public
       REDIS_HOST: redis
       REDIS_PORT: 6379
     depends_on:
@@ -43,7 +43,7 @@ services:
       - "8081:8081"
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://user:password@postgres:5432/backend_db?schema=public
+      DATABASE_URL: postgresql://user:kacsa@postgres:5432/backend_db?schema=public
       REDIS_HOST: redis
       REDIS_PORT: 6379
     depends_on:
