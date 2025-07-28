@@ -5,9 +5,9 @@ services:
     environment:
       POSTGRES_DB: backend_db
       POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: kacsa
     ports:
-      - "2345:2345"
+      - "2345:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

@@ -1,34 +1,36 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "private": true,
-  "scripts": {
-    "dev": "concurrently \"pnpm --filter rest-api dev\" \"pnpm --filter ws-api dev\"",
-    "dev:rest": "pnpm --filter rest-api dev",
-    "dev:ws": "pnpm --filter ws-api dev",
-    "build": "pnpm --filter shared build && pnpm --filter database build && pnpm --filter rest-api build && pnpm --filter ws-api build",
-    "build:rest": "pnpm --filter shared build && pnpm --filter database build && pnpm --filter rest-api build",
-    "build:ws": "pnpm --filter shared build && pnpm --filter database build && pnpm --filter ws-api build",
-    "start": "concurrently \"pnpm --filter rest-api start\" \"pnpm --filter ws-api start\"",
-    "start:rest": "pnpm --filter rest-api start",
-    "start:ws": "pnpm --filter ws-api start",
-    "lint": "pnpm --filter \"*\" lint",
-    "lint:fix": "pnpm --filter \"*\" lint:fix",
-    "db:generate": "pnpm --filter database db:generate",
-    "db:push": "pnpm --filter database db:push",
-    "db:migrate": "pnpm --filter database db:migrate",
-    "db:studio": "pnpm --filter database db:studio",
-    "docker:dev": "docker-compose -f docker-compose.dev.yml up -d",
-    "docker:dev:down": "docker-compose -f docker-compose.dev.yml down",
-    "docker:build": "docker-compose -f docker-compose.prod.yml build",
-    "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
-    "docker:prod:down": "docker-compose -f docker-compose.prod.yml down"
-  },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
-  }
+    "name": "backend",
+    "version": "1.0.0",
+    "private": true,
+    "packageManager": "pnpm@10.13.1",
+    "scripts": {
+        "dev": "concurrently -n \"REST-API,WS-API\" -c \"green,blue\" --prefix \"[{name}]\" \"pnpm --filter rest-api dev\" \"pnpm --filter ws-api dev\"",
+        "dev:rest": "pnpm --filter rest-api dev",
+        "dev:ws": "pnpm --filter ws-api dev",
+        "build": "pnpm --filter shared build && pnpm --filter database build && pnpm --filter rest-api build && pnpm --filter ws-api build",
+        "clean": "pnpm --filter shared clean && pnpm --filter database clean && pnpm --filter rest-api clean && pnpm --filter ws-api clean",
+        "build:rest": "pnpm --filter shared build && pnpm --filter database build && pnpm --filter rest-api build",
+        "build:ws": "pnpm --filter shared build && pnpm --filter database build && pnpm --filter ws-api build",
+        "start": "concurrently \"pnpm --filter rest-api start\" \"pnpm --filter ws-api start\"",
+        "start:rest": "pnpm --filter rest-api start",
+        "start:ws": "pnpm --filter ws-api start",
+        "lint": "pnpm --filter \"*\" lint",
+        "lint:fix": "pnpm --filter \"*\" lint:fix",
+        "db:generate": "pnpm --filter database db:generate",
+        "db:push": "pnpm --filter database db:push",
+        "db:migrate": "pnpm --filter database db:migrate",
+        "db:studio": "pnpm --filter database db:studio",
+        "docker:dev": "docker-compose -f docker-compose.dev.yml up -d",
+        "docker:dev:down": "docker-compose -f docker-compose.dev.yml down",
+        "docker:build": "docker-compose -f docker-compose.prod.yml build",
+        "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
+        "docker:prod:down": "docker-compose -f docker-compose.prod.yml down"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2"
+    },
+    "engines": {
+        "node": ">=18.0.0",
+        "pnpm": ">=8.0.0"
+    }
 }

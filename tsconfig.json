@@ -1,0 +1,9 @@
+{
+  "files": [],
+  "references": [
+    { "path": "packages/shared" },
+    { "path": "packages/database" },
+    { "path": "services/rest-api" },
+    { "path": "services/ws-api" }
+  ]
+}
